@@ -19,12 +19,8 @@
 
   <div class="card card_custom">
   	<div class="card-content">
-  		
-      
-  		<img src="{{userPicHelper}}" alt="" />
-
-      
   		{{> welcome }}
+      
   		<span class="card-title black-text">Leaderboard</span>
 	  {{> leaderboard }}
 	  <div class="card-action">
@@ -40,6 +36,7 @@
 	<table>
         <thead>
           <tr>
+              <th data-field="pic"></th>
               <th data-field="id">Name</th>
               <th data-field="name">Hours</th>
           </tr>
@@ -48,6 +45,7 @@
         <tbody>
           	{{#each timecards}}
 				<tr>
+                <td><img src="{{url}}" alt="" class="circle responsive-img table_img"></td>
 		            <td>{{name}}</td>
 		            <td>{{hours}}:{{min}}</td>
 		        </tr>
@@ -56,6 +54,7 @@
       </table>
 	
 </template>
+
 
 <template name="welcome">
 	{{#if clocked_in}}

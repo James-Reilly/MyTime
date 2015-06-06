@@ -18,6 +18,7 @@ Template.clock.events({
       	if(cards[0].cur == 1){
           //Update if they are clocked in clock them out
       		Timecards.update(id, {$set:{cur: 0}});
+          
       	}else{
           //Update if they are clocked out clock in
       		Timecards.update(id, {$set:{cur: 1}});
@@ -31,6 +32,7 @@ Template.clock.events({
       		hours: 0,
       		min: 0,
       		clockedIn: Date.now(),
+          url: "http://graph.facebook.com/" + Meteor.user().services.facebook.id + "/picture/?type=large",
       		cur: 1,
       	});
       }
@@ -53,10 +55,28 @@ Template.welcome.helpers({
 
 Template.profileView.helpers({
     userPicHelper: function() {
-        if (this.profile) {
-            var id = this.profile.facebookId;
-            var img = 'http://graph.facebook.com/' + id + '/picture?type=square&height=160&width=160';
-            return img;
-        }
+        if(Meteor.user().services.facebook){
+          return "http://graph.facebook.com/" + Meteor.user().services.facebook.id + "/picture/?type=large"; 
+        } 
     }
 });
+
+Template.leader.helpers({
+  getLeader: function() {
+    var cards = Timecards.find().fetch();
+    if(cards.length > 0){
+      var max = cards[0];
+      for(var i = 1; i < cards.length; i++){
+        var totalChallenger = cards[i].hours * 60;
+        totalChallenger += cards[i].min;
+        var totalMax = max.hours * 60;
+        totalMax += max.min;
+        if(totalChallenger > totalMax){
+          max = cards[i];
+        }
+      }
+      return max;
+    }
+
+  }
+})

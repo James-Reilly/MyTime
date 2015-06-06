@@ -27,25 +27,11 @@ Meteor.startup(function(){
     }, 60000);
 });
 
+
 Accounts.onCreateUser(function(options, user) {
-    // We still want the default hook's 'profile' behavior.
     if (options.profile) {
+        options.profile.picture = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=large";
         user.profile = options.profile;
-        user.profile.memberSince = new Date();
-
-        // Copy data from Facebook to user object
-        user.profile.facebookId = user.services.facebook.id;
-        user.profile.firstName = user.services.facebook.first_name;
-        user.profile.email = user.services.facebook.email;
-        user.profile.link = user.services.facebook.link;
     }
-
     return user;
-});
-
-Meteor.publish('singleUser', function(id) {
-    check(id, String);
-
-    return Meteor.users.find(id,
-        {fields: {'profile.facebookId': 1, 'profile.name': 1, 'profile.firstName': 1, 'profile.link': 1}});
 });
