@@ -1,0 +1,75 @@
+<head>
+  <title>mytime</title>
+</head>
+
+
+
+<body>
+	<nav>
+    <div class="nav-wrapper blue darken-1">
+      <a href="#" class="brand-logo logo">MyTime</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+      	<div class="sign_in">
+        	{{> loginButtons}}
+        </div>
+      </ul>
+    </div>
+  </nav>
+  
+
+  <div class="card card_custom">
+  	<div class="card-content">
+  		
+      
+  		<img src="{{userPicHelper}}" alt="" />
+
+      
+  		{{> welcome }}
+  		<span class="card-title black-text">Leaderboard</span>
+	  {{> leaderboard }}
+	  <div class="card-action">
+	  	{{> clock }}
+	  </div>
+	</div>
+  </div>
+  
+
+</body>
+
+<template name="leaderboard">
+	<table>
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Hours</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          	{{#each timecards}}
+				<tr>
+		            <td>{{name}}</td>
+		            <td>{{hours}}:{{min}}</td>
+		        </tr>
+			{{/each}}
+        </tbody>
+      </table>
+	
+</template>
+
+<template name="welcome">
+	{{#if clocked_in}}
+		<h4>Status: Clocked <strong>In</strong>!</h4>
+	{{else}}
+		<h4>Status: Clocked <strong>Out</strong>!</h4>
+	{{/if}}
+</template>
+
+<template name="clock">
+	
+	<a class="AddPlaceButton waves-effect waves-light btn blue darken-1 white-text">Clock In/Out</a>
+</template>
+
+
+
+
