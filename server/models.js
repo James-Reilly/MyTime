@@ -1,16 +1,21 @@
-//Init DB
-Timecards = new Meteor.Collection('timecards');
+
+
 
 Meteor.startup(function(){
+    
+    Timecards = new Meteor.Collection('Timecards');
+    
+    
     //Call every minute
     Meteor.setInterval(function(){
-    	var timeCards = Timecards.find().fetch();
-    	for(i = 0; i < timeCards.length; i++) {
-    		if(timeCards[i].cur == 1){
+      var timeCards = Timecards.find().fetch();
+      for(i = 0; i < timeCards.length; i++) {
+        if(timeCards[i].cur == 1){
                 //Save the current minutes (plus 1)
-    			var minTemp = timeCards[i].min + 1;
+          var minTemp = timeCards[i].min + 1;
                 //Save the current hours
                 var hourTemp = timeCards[i].hours;
+                var newTotal = timeCards[i].total + 1;
                 //if minutes is over 60 update hours
                 if(minTemp >= 60){
                     minTemp = 0;
@@ -19,11 +24,11 @@ Meteor.startup(function(){
                 //Get the element ID by name
                 //I know there could be repeat names but it works for my use_case
                 var id = Timecards.findOne({ name: timeCards[i].name})._id;
-    			//Update the min and hours of user
-    			Timecards.update(id, {$set:{min: minTemp, hours: hourTemp}});
-    					
-    		}
-    	}
+          //Update the min and hours of user
+          Timecards.update(id, {$set:{min: minTemp, hours: hourTemp, total: newTotal}});
+              
+        }
+      }
     }, 60000);
 });
 
