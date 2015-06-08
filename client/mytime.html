@@ -5,13 +5,20 @@
 
 
 <body>
-	<nav>
+  <nav>
     <div class="nav-wrapper blue darken-1">
-      <a href="#" class="brand-logo logo">MyTime</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-      	<div class="sign_in">
-        	{{> loginButtons}}
+      <a href="#!" class="brand-logo logo">MyTime</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+      <ul class="right hide-on-med-and-down">
+        <div class="sign_in">
+          {{> loginButtons}}
         </div>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <div class="black-text center-align">
+          {{> loginButtons}}
+        </div>
+
       </ul>
     </div>
   </nav>
@@ -19,11 +26,14 @@
 
   <div class="card card_custom">
   	<div class="card-content">
-  		{{> welcome }}
-      
-  		<span class="card-title black-text">Leaderboard</span>
+
+  		
+      {{> leader }}
+        <div class="divider"></div>
+  		
 	  {{> leaderboard }}
 	  <div class="card-action">
+      {{> welcome }}
 	  	{{> clock }}
 	  </div>
 	</div>
@@ -36,7 +46,7 @@
 	<table>
         <thead>
           <tr>
-              <th data-field="pic"></th>
+              <th data-field="pic">Leaderboard</th>
               <th data-field="id">Name</th>
               <th data-field="name">Hours</th>
           </tr>
@@ -47,7 +57,7 @@
 				<tr>
                 <td><img src="{{url}}" alt="" class="circle responsive-img table_img"></td>
 		            <td>{{name}}</td>
-		            <td>{{hours}}:{{min}}</td>
+		            <td>{{hours}}:{{minString}}</td>
 		        </tr>
 			{{/each}}
         </tbody>
@@ -67,6 +77,30 @@
 <template name="clock">
 	
 	<a class="AddPlaceButton waves-effect waves-light btn blue darken-1 white-text">Clock In/Out</a>
+</template>
+
+<template name="leader ">
+        
+        <h1 class="center-align hide-on-small-only responsive-img">
+        The current leader is...
+        </h1>
+        <h3 class="center-align hide-on-med-and-up responsive-img">
+          The current leader is...
+        </h3>
+
+        <img src="{{getUrl}}" alt="" 
+        class="circle responsive-img hide-on-small-only center-me">
+        <img src="{{getUrl}}" alt="" 
+        class="circle responsive-img hide-on-med-and-up center-me-small">
+        
+        <h3 class="center-align hide-on-small-only responsive-img">
+        {{leaderName}}
+        </h3>
+        <h5 class="center-align hide-on-med-and-up responsive-img">
+          {{leaderName}}
+        </h5>
+        
+  
 </template>
 
 

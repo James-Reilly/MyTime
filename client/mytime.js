@@ -1,7 +1,14 @@
 var Timecards = new Meteor.Collection('Timecards');
 
 
+
 if(Meteor.isClient){
+
+  $( document ).ready(function(){
+    $(".button-collapse").sideNav();
+  });
+  
+
   Template.leaderboard.helpers({
     timecards: function(){
       if(Timecards){
@@ -38,6 +45,7 @@ if(Meteor.isClient){
             name: name,
             hours: 0,
             min: 0,
+            minString: "00",
             total: 0,
             clockedIn: Date.now(),
             url: "http://graph.facebook.com/" + Meteor.user().services.facebook.id + "/picture/?type=large",
@@ -67,26 +75,30 @@ if(Meteor.isClient){
       
   });
 
-/*
-  Template.leader.helpers({
-    getLeader: function() {
-      var cards = Timecards.find().fetch();
-      if(cards.length > 0){
-        var max = cards[0];
-        for(var i = 1; i < cards.length; i++){
-          var totalChallenger = cards[i].hours * 60;
-          totalChallenger += cards[i].min;
-          var totalMax = max.hours * 60;
-          totalMax += max.min;
-          if(totalChallenger > totalMax){
-            max = cards[i];
-          }
-        }
-        return max;
-      }
 
+  Template.leader.helpers({
+    /*
+    getUrl: function() {
+      var cards = Timecards.find({}, { sort: { total: -1 }}).fetch();
+      if(cards.length > 0){
+        return cards[0].url;
+      }
+    */
+
+    leaderName: function() {
+      var cards = Timecards.find({}, { sort: { total: -1 }}).fetch();
+      if(cards.length > 0){
+        return cards[0].name;
+      }
     }
   });
-  */
+
+  Template.leader.getUrl = function(){
+    var cards = Timecards.find({}, { sort: { total: -1 }}).fetch();
+      if(cards.length > 0){
+        return cards[0].url;
+      }
+  };
+  
 }
 

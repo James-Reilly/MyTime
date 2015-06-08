@@ -1,4 +1,7 @@
 /* CSS declarations go here */
+
+
+
 .logo{
 	margin-left: 20px;
 }
@@ -13,4 +16,19 @@
 	width: 50px;
 	height: 50px;
 	margin: auto auto;
+}
+
+.center-me {
+  display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.center-me-small{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+	height: 150px;
 }

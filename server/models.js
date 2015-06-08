@@ -16,16 +16,22 @@ Meteor.startup(function(){
                 //Save the current hours
                 var hourTemp = timeCards[i].hours;
                 var newTotal = timeCards[i].total + 1;
+                var newMinString;
                 //if minutes is over 60 update hours
                 if(minTemp >= 60){
                     minTemp = 0;
                     hourTemp += 1;
                 }
+                if(minTemp < 10){
+                	newMinString = "0" + minTemp;
+                }else{
+                	newMinString = "" + minTemp;
+                }
                 //Get the element ID by name
                 //I know there could be repeat names but it works for my use_case
                 var id = Timecards.findOne({ name: timeCards[i].name})._id;
           //Update the min and hours of user
-          Timecards.update(id, {$set:{min: minTemp, hours: hourTemp, total: newTotal}});
+          Timecards.update(id, {$set:{min: minTemp, hours: hourTemp, total: newTotal, minString: newMinString}});
               
         }
       }
